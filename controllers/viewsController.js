@@ -1,5 +1,6 @@
 const Tour = require('../models/tourModel');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getOverview = async (req, res, next) => {
   // 1) Get tour data from Collection
@@ -20,6 +21,10 @@ exports.getTour = catchAsync(async (req, res, next) => {
     fields: 'review rating user'
   });
 
+  if (!tour) {
+    return next(new AppError('There is no tour with that nameeeeeeeee.', 404));
+  }
+
   res.status(200).render('tour', {
     title: `${tour.name} Tour`,
     tour
@@ -28,6 +33,6 @@ exports.getTour = catchAsync(async (req, res, next) => {
 
 exports.getLoginForm = (req, res) => {
   res.status(200).render('login', {
-  title: `LOG YO ASS IN!`
-  })
-}
+    title: `LOG YO ASS IN!`
+  });
+};
