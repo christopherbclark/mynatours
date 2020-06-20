@@ -1,0 +1,277 @@
+doctype html
+html
+    head
+        block head
+          meta(charset="UTF-8")
+          meta(name="viewport" content="width=device-width, initial-scale=1.0")
+          link(rel='stylesheet' href='/css/style.css')
+          link(rel='shortcut icon' type='/image.png' href='/img/favicon.png')
+          link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+          title Natours | #{title}
+
+    body
+        // HEADER
+        include _header
+
+        // CONTENT:
+        block content
+          h1 This is a placeholder heading
+    
+        // FOOTER:
+        include _footer
+    
+        //- script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js')
+        //- script(src='/js/mapbox.js')
+        //- script(src='/js/login.js')
+        script(src='/js/bundle.js')
+//- doctype html
+//- head
+//-   meta(charset='UTF-8')
+//-   meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//-   link(rel='stylesheet' href='css/style.css')
+//-   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css' integrity='sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=' crossorigin='anonymous')
+//-   title Microsoft Official Homepage
+//- .container
+//-   nav.main-nav
+//-     img.logo(src='img/logo.png' alt='Microsoft')
+//-     ul.main-menu
+//-       li
+//-         a(href='#') Office
+//-       li
+//-         a(href='#') Windows
+//-       li
+//-         a(href='#') Surface
+//-       li
+//-         a(href='#') Xbox
+//-       li
+//-         a(href='#') Deals
+//-       li
+//-         a(href='#') Support
+//-     ul.right-menu
+//-       li
+//-         a(href='#')
+//-           i.fas.fa-search  
+//-       li
+//-         a(href='#')
+//-           i.fas.fa-shopping-cart  
+//-   // -Showcase
+//-   header.showcase
+//-     h2 Surface Deals
+//-     p
+//-       | Select surfaces are on sale now - save while supplies last
+//-     a.btn(href='#')
+//-       | Shop Now 
+//-       i.fas.fa-chevron-right
+//-   // START Homecards
+//-   section.home-cards
+//-     div
+//-       img(src='img/card1.jpeg' alt='')
+//-       h3= tour
+//-       p
+//-         | See how Bubby Gumpskin, General Contractor at large, uses the
+//-         | Surface Pro 7 to put his plans into action.
+//-       a(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-     div
+//-       img(src='img/card2.jpeg' alt='')
+//-       h3 New Surface Laptop 3
+//-       p
+//-         | See how Emmy C., world-famous film director, uses the Surface Pro 7
+//-         | to bring her ideas to life.
+//-       a(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-     div
+//-       img(src='img/card3.jpeg' alt='')
+//-       h3 Save $150 + free controller
+//-       p
+//-         | See how Bubby Gumpskin, General Contractor at large, uses the
+//-         | Surface Pro 7 to put his plans into action.
+//-       a(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-     div
+//-       img(src='img/card4.jpeg' alt='')
+//-       h3 Introducing the new Microsoft Edge
+//-       p
+//-         | See how Bubby Gumpskin, General Contractor at large, uses the
+//-         | Surface Pro 7 to put his plans into action.
+//-       a(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-   // End Home Cards 1
+//-   // START Xbox Section
+//-   section.xbox
+//-     .content
+//-       h2 Xbox Game Pass Ultimate
+//-       p
+//-         | New worlds await on Xbox Game Pass Ultimate, which includes Xbox
+//-         | Live Gold and over 100 high-quality console and PC games. Play
+//-         | together with friends and go nuts.
+//-       a.btn(href='#')
+//-         | Join Now 
+//-         i.fas.fa-chevron-right
+//-   // End Xbox
+//-   // HOME Cards 2
+//-   section.home-cards
+//-     div
+//-       img(src='img/card1.jpeg' alt='')
+//-       h3 New Surface Pro 7
+//-       p
+//-         | See how Bubby Gumpskin, General Contractor at large, uses the
+//-         | Surface Pro 7 to put his plans into action.
+//-       a(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-     div
+//-       img(src='img/card2.jpeg' alt='')
+//-       h3 New Surface Laptop 3
+//-       p
+//-         | See how Emmy C., world-famous film director, uses the Surface Pro 7
+//-         | to bring her ideas to life.
+//-       a(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-     div
+//-       img(src='img/card3.jpeg' alt='')
+//-       h3 Save $150 + free controller
+//-       p
+//-         | See how Bubby Gumpskin, General Contractor at large, uses the
+//-         | Surface Pro 7 to put his plans into action.
+//-       a(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-     div
+//-       img(src='img/card4.jpeg' alt='')
+//-       h3 Introducing the new Microsoft Edge
+//-       p
+//-         | See how Bubby Gumpskin, General Contractor at large, uses the
+//-         | Surface Pro 7 to put his plans into action.
+//-       a(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-   // End Home Cards 2
+//-   // Carbon
+//-   section.carbon.dark
+//-     .content
+//-       h2 Commiting To Carbon Negative
+//-       p
+//-         | Microsoft announced a plan on Thursday to become carbon negative by
+//-         | 2030 &mdash; meaning that it will remove more carbon dioxide from the
+//-         | atmosphere than it emits. Good stuff!
+//-       a.btn(href='#')
+//-         | Learn More 
+//-         i.fas.fa-chevron-right
+//-   // Follow Microsoft
+//-   section.follow
+//-     h1 Follow Microsoft
+//-     a(href='https://facebook.com')
+//-       img(src='img/social-fb.png' alt='')
+//-     a(href='https://facebook.com')
+//-       img(src='img/social-twitter.png' alt='')
+//-     a(href='https://facebook.com')
+//-       img(src='img/social-li.png' alt='')
+//- // Links
+//- section.links
+//-   .links-inner
+//-     ul
+//-       li
+//-         h3 What&apos;s New
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-     ul
+//-       li
+//-         h3 Microsoft Store
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-     ul
+//-       li
+//-         h3 Education
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-     ul
+//-       li
+//-         h3 Enterprise
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-     ul
+//-       li
+//-         h3 Developer
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-     ul
+//-       li
+//-         h3 Company
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//-       li
+//-         a(href='#') Surface Pro X
+//- // Footer
+//- footer.main-footer
+//-   .footer-inner
+//-     div
+//-       i.fa.fa-globe-americas.fa-2x  English (United States)
+//-   ul
+//-     li
+//-       a(href='#') Sitemap
+//-     li
+//-       a(href='#') Sitemap
+//-     li
+//-       a(href='#') Sitemap
+//-     li
+//-       a(href='#') Sitemap
+//-     li
+//-       a(href='#') Sitemap
+//-     li
+//-       a(href='#') Sitemap
+//-     li
+//-       a(href='#') Sitemap
+//-     li &copy; Microsoft 2020
+
