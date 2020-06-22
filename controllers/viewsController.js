@@ -36,3 +36,9 @@ exports.getLoginForm = (req, res) => {
     title: `LOG YO ASS IN!`
   });
 };
+
+exports.getAccount = (req, res) => {
+  res.status(200).render('account', {
+    title: `It's YO ACCOUNT!`
+  });
+};
