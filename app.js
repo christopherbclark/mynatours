@@ -76,8 +76,8 @@ app.use(
 
 /* 4 TEST MIDDLEWARE */ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(req.headers);
-  console.log(req.cookies);
+  // console.log(req.headers);
+  // console.log(req.cookies);
   next();
 });
 
