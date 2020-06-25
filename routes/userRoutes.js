@@ -3,6 +3,8 @@ const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const multer = require('multer');
 
+const upload = multer({ dest: 'public/img/users' });
+
 const router = express.Router();
 
 router.post('/signup', authController.signup);
@@ -16,7 +18,13 @@ router.use(authController.protect);
 
 router.patch('/updateMyPassword', authController.updatePassword);
 router.get('/me', userController.getMe, userController.getUser);
-router.patch('/updateMe', userController.updateMe);
+router.patch(
+  '/updateMe',
+  upload.single(
+    'photo'
+  ) /* 'photo' is the field in the user form that will take the image. 'Single' is for one single file */,
+  userController.updateMe
+);
 router.delete('/deleteMe', userController.deleteMe);
 
 router.use(authController.restrictTo('admin'));
