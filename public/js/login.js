@@ -38,5 +38,3 @@ export const logout = async () => {
     console.log(err);
   }
 };
-
-export const messageTest = "What's up, y'all?";
