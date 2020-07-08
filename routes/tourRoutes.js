@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.use('/:tourId/reviews', reviewRouter);
 
+router.post('/createTour').post(tourController.createTour);
+
 router
   .route('/top-5-cheap')
   .get(tourController.aliasTopTours, tourController.getAllTours);
