@@ -23,6 +23,9 @@ export const updateSettings = async (data, type) => {
         'success',
         `${type.toUpperCase()} updated successfully, BITCH!`
       );
+      window.setTimeout(() => {
+        location.assign('/me');
+      }, 500);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);

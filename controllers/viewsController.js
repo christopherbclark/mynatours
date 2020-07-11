@@ -39,6 +39,18 @@ exports.getLoginForm = (req, res) => {
   });
 };
 
+exports.getSignupForm = (req, res) => {
+  res.status(200).render('signup', {
+    title: `LOG YO ASS IN!`
+  });
+};
+
+exports.createTour = (req, res) => {
+  res.status(200).render('create', {
+    title: `OH YEAH! Make a tour!`
+  });
+};
+
 exports.getAccount = (req, res) => {
   res.status(200).render('account', {
     title: `It's YO ACCOUNT!`

@@ -1,0 +1,35 @@
+extends base
+block content
+    main.main
+        .create-form
+            h2.heading-secondary.ma-bt-lg Create a tour, baby!
+            form.form.form--create
+                .form__group
+                    label.form__label(for='name') Tour name
+                    input#name.form__input(type='text', placeholder='you@example.com', required)
+                .form__group
+                    label.form__label(for='duration') Tour duration
+                    input#duration.form__input(type='number', placeholder='you@example.com', required)
+                .form__group
+                    label.form__label(for='maxGroupSize') Max group size
+                    input#maxGroupSize.form__input(type='number', placeholder='you@example.com', required)
+                .form__group
+                    label.form__label(for='difficulty') Difficulty
+                    input#difficulty.form__input(type='text', placeholder='you@example.com', required)
+                .form__group
+                    label.form__label(for='price') Price
+                    input#price.form__input(type='number', placeholder='you@example.com', required)
+                .form__group
+                    label.form__label(for='startLocation') Starting Location
+                    input#startLocation.form__input(type='text', placeholder='you@example.com', required)
+                .form__group
+                    label.form__label(for='summary') Summary
+                    input#summary.form__input(type='text', placeholder='you@example.com', required)
+                .form__group
+                    label.form__label(for='description') Detailed Description
+                    input#description.form__input(type='text', placeholder='you@example.com', required)
+                .form__group
+                    label.form__label(for='imageCover') Image Cover
+                    input#imageCover.form__input(type='file', required)
+                .form__group
+                    button.btn.btn--green Submit
