@@ -8622,13 +8622,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var createTour = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(name, duration, maxGroupSize, difficulty, price, startLocation, summary, description, imageCover) {
-    var res;
+    var _startLocation, res;
+
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            _context.next = 3;
+            _startLocation = {
+              type: 'Point',
+              coordinates: [-80.185942, 25.774772],
+              address: '47 Bowman Lane, Kings Park, NY 11754',
+              description: 'New Yorkkkkkkkk'
+            };
+            _context.next = 4;
             return (0, _axios.default)({
               method: 'POST',
               url: 'http://127.0.0.1:8000/api/v1/tours',
@@ -8638,14 +8645,14 @@ var createTour = /*#__PURE__*/function () {
                 maxGroupSize: maxGroupSize,
                 difficulty: difficulty,
                 price: price,
-                startLocation: startLocation,
+                startLocation: _startLocation,
                 summary: summary,
                 description: description,
                 imageCover: imageCover
               }
             });
 
-          case 3:
+          case 4:
             res = _context.sent;
 
             if (res.data.status === 'success') {
@@ -8655,20 +8662,20 @@ var createTour = /*#__PURE__*/function () {
               }, 1500);
             }
 
-            _context.next = 10;
+            _context.next = 11;
             break;
 
-          case 7:
-            _context.prev = 7;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context["catch"](0);
             (0, _alerts.showAlert)('error', _context.t0.response.data.message);
 
-          case 10:
+          case 11:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee, null, [[0, 8]]);
   }));
 
   return function createTour(_x, _x2, _x3, _x4, _x5, _x6, _x7, _x8, _x9) {
@@ -9119,7 +9126,7 @@ if (createForm) {
     var startLocation = document.getElementById('startLocation').value;
     var summary = document.getElementById('summary').value;
     var description = document.getElementById('description').value;
-    var imageCover = document.getElementById('imageCover').value;
+    var imageCover = document.getElementById('imageCover').files[0];
     (0, _createTour.createTour)(name, duration, maxGroupSize, difficulty, price, startLocation, summary, description, imageCover);
   });
 }

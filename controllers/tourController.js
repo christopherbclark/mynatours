@@ -20,29 +20,31 @@ const upload = multer({
   fileFilter: multerFilter
 });
 
-exports.uploadTourImages = upload.fields([
-  { name: 'imageCover', maxCount: 1 },
-  { name: 'images', maxCount: 3 }
-]);
+exports.uploadTourImages = upload.single('imageCover');
+
+//upload.fields([
+//{ name: 'imageCover', maxCount: 1 } //,
+//{ name: 'images', maxCount: 3 }
+//]);
 
 //upload.single('images') will return req.file
 //upload.array('images', 5) will reutrn req.files
 
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  //console.log(req.files);
+  console.log(req.file);
 
-  if (!req.files.imageCover || !req.files.images) return next();
+  // if (!req.files.imageCover || !req.files.images) return next();
 
   //)1 Cover Image
   req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
-  await sharp(req.files.imageCover[0].buffer)
+  await sharp(req.file.imageCover[0].buffer)
     .resize(2000, 1333)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
     .toFile(`public/img/tours/${req.body.imageCover}`);
 
   //2) images
-  req.body.images = [];
+  /*req.body.images = [];
 
   await Promise.all(
     req.files.images.map(async (file, i) => {
@@ -56,7 +58,7 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
 
       req.body.images.push(filename);
     })
-  );
+  ); */
 
   next();
 });

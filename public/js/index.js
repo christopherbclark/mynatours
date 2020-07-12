@@ -45,7 +45,7 @@ if (createForm) {
     const startLocation = document.getElementById('startLocation').value;
     const summary = document.getElementById('summary').value;
     const description = document.getElementById('description').value;
-    const imageCover = document.getElementById('imageCover').value;
+    const imageCover = document.getElementById('imageCover').files[0];
     createTour(
       name,
       duration,

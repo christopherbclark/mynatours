@@ -21,7 +21,7 @@ block content
                     input#price.form__input(type='number', placeholder='you@example.com', required)
                 .form__group
                     label.form__label(for='startLocation') Starting Location
-                    input#startLocation.form__input(type='text', placeholder='you@example.com', required)
+                    input#startLocation.form__input(type='text', placeholder='you@example.com')
                 .form__group
                     label.form__label(for='summary') Summary
                     input#summary.form__input(type='text', placeholder='you@example.com', required)
@@ -29,7 +29,7 @@ block content
                     label.form__label(for='description') Detailed Description
                     input#description.form__input(type='text', placeholder='you@example.com', required)
                 .form__group
-                    label.form__label(for='imageCover') Image Cover
-                    input#imageCover.form__input(type='file', required)
+                     input.form__upload(type='file', accept='image/*', id='imageCover', name='imageCover')
+                     label(for='imageCover') Choose image cover
                 .form__group
                     button.btn.btn--green Submit
