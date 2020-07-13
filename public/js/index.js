@@ -37,26 +37,17 @@ if (loginForm) {
 if (createForm) {
   createForm.addEventListener('submit', e => {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const duration = document.getElementById('duration').value;
-    const maxGroupSize = document.getElementById('maxGroupSize').value;
-    const difficulty = document.getElementById('difficulty').value;
-    const price = document.getElementById('price').value;
-    const startLocation = document.getElementById('startLocation').value;
-    const summary = document.getElementById('summary').value;
-    const description = document.getElementById('description').value;
-    const imageCover = document.getElementById('imageCover').files[0];
-    createTour(
-      name,
-      duration,
-      maxGroupSize,
-      difficulty,
-      price,
-      startLocation,
-      summary,
-      description,
-      imageCover
-    );
+    const form = new FormData();
+    form.set('name', document.getElementById('name').value);
+    form.set('duration', document.getElementById('duration').value);
+    form.set('maxGroupSize', document.getElementById('maxGroupSize').value);
+    form.set('difficulty', document.getElementById('difficulty').value);
+    form.set('price', document.getElementById('price').value);
+    form.set('startLocation', document.getElementById('startLocation').value);
+    form.set('summary', document.getElementById('summary').value);
+    form.set('description', document.getElementById('description').value);
+    form.set('imageCover', document.getElementById('imageCover').files[0]);
+    createTour(form);
   });
 }
 

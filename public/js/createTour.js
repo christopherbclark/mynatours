@@ -2,17 +2,7 @@
 import axios from 'axios';
 import { showAlert } from './alerts';
 
-export const createTour = async (
-  name,
-  duration,
-  maxGroupSize,
-  difficulty,
-  price,
-  startLocation,
-  summary,
-  description,
-  imageCover
-) => {
+export const createTour = async form => {
   try {
     const startLocation = {
       type: 'Point',
@@ -23,18 +13,11 @@ export const createTour = async (
 
     const res = await axios({
       method: 'POST',
+      headers: {
+        'Content-Type': `multipart/form-data; boundary=${form._boundary}`
+      },
       url: 'http://127.0.0.1:8000/api/v1/tours',
-      data: {
-        name,
-        duration,
-        maxGroupSize,
-        difficulty,
-        price,
-        startLocation,
-        summary,
-        description,
-        imageCover
-      }
+      data: form
     });
 
     if (res.data.status === 'success') {

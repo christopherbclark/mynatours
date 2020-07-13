@@ -8621,15 +8621,14 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var createTour = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(name, duration, maxGroupSize, difficulty, price, startLocation, summary, description, imageCover) {
-    var _startLocation, res;
-
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(form) {
+    var startLocation, res;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            _startLocation = {
+            startLocation = {
               type: 'Point',
               coordinates: [-80.185942, 25.774772],
               address: '47 Bowman Lane, Kings Park, NY 11754',
@@ -8638,18 +8637,11 @@ var createTour = /*#__PURE__*/function () {
             _context.next = 4;
             return (0, _axios.default)({
               method: 'POST',
+              headers: {
+                'Content-Type': "multipart/form-data; boundary=".concat(form._boundary)
+              },
               url: 'http://127.0.0.1:8000/api/v1/tours',
-              data: {
-                name: name,
-                duration: duration,
-                maxGroupSize: maxGroupSize,
-                difficulty: difficulty,
-                price: price,
-                startLocation: _startLocation,
-                summary: summary,
-                description: description,
-                imageCover: imageCover
-              }
+              data: form
             });
 
           case 4:
@@ -8678,7 +8670,7 @@ var createTour = /*#__PURE__*/function () {
     }, _callee, null, [[0, 8]]);
   }));
 
-  return function createTour(_x, _x2, _x3, _x4, _x5, _x6, _x7, _x8, _x9) {
+  return function createTour(_x) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -9118,16 +9110,17 @@ if (loginForm) {
 if (createForm) {
   createForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    var name = document.getElementById('name').value;
-    var duration = document.getElementById('duration').value;
-    var maxGroupSize = document.getElementById('maxGroupSize').value;
-    var difficulty = document.getElementById('difficulty').value;
-    var price = document.getElementById('price').value;
-    var startLocation = document.getElementById('startLocation').value;
-    var summary = document.getElementById('summary').value;
-    var description = document.getElementById('description').value;
-    var imageCover = document.getElementById('imageCover').files[0];
-    (0, _createTour.createTour)(name, duration, maxGroupSize, difficulty, price, startLocation, summary, description, imageCover);
+    var form = new FormData();
+    form.set('name', document.getElementById('name').value);
+    form.set('duration', document.getElementById('duration').value);
+    form.set('maxGroupSize', document.getElementById('maxGroupSize').value);
+    form.set('difficulty', document.getElementById('difficulty').value);
+    form.set('price', document.getElementById('price').value);
+    form.set('startLocation', document.getElementById('startLocation').value);
+    form.set('summary', document.getElementById('summary').value);
+    form.set('description', document.getElementById('description').value);
+    form.set('imageCover', document.getElementById('imageCover').files[0]);
+    (0, _createTour.createTour)(form);
   });
 }
 
@@ -9222,7 +9215,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51792" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59906" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
