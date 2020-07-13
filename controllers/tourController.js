@@ -31,13 +31,14 @@ exports.uploadTourImages = upload.single('imageCover');
 //upload.array('images', 5) will reutrn req.files
 
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  console.log(req.body);
+  //console.log(req.body);
 
   // if (!req.files.imageCover || !req.files.images) return next();
 
   //)1 Cover Image
   req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
-  await sharp(req.file.imageCover.buffer)
+  console.log(req.file);
+  await sharp(req.file.buffer)
     .resize(2000, 1333)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
