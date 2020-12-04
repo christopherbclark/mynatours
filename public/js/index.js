@@ -26,12 +26,16 @@ if (mapBox) {
 }
 
 if (loginForm) {
+  console.log('this is working');
   loginForm.addEventListener('submit', e => {
     e.preventDefault();
+    console.log('but button was clicked!');
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     login(email, password);
   });
+} else {
+  console.log('the login form is missing');
 }
 
 if (createForm) {
@@ -47,12 +51,13 @@ if (createForm) {
     myForm.set('summary', document.getElementById('summary').value);
     myForm.set('description', document.getElementById('description').value);
     myForm.set('imageCover', document.getElementById('imageCover').files[0]);
-    console.log(myForm);
+
     createTour(myForm);
   });
 }
 
 if (signupForm) {
+  console.log('The form is here!!!');
   signupForm.addEventListener('submit', e => {
     e.preventDefault();
     const name = document.getElementById('name').value;
@@ -61,6 +66,8 @@ if (signupForm) {
     const passwordConfirm = document.getElementById('passwordConfirm').value;
     signup(name, email, password, passwordConfirm);
   });
+} else {
+  console.log('No form!');
 }
 
 if (logOutBtn) logOutBtn.addEventListener('click', logout);

@@ -8576,7 +8576,7 @@ var signup = /*#__PURE__*/function () {
             if (res.data.status === 'success') {
               (0, _alerts.showAlert)('success', 'Welcome to the party!!!');
               window.setTimeout(function () {
-                location.assign('/me');
+                location.assign('/');
               }, 1500);
             }
 
@@ -8630,17 +8630,16 @@ var createTour = /*#__PURE__*/function () {
             _context.prev = 0;
             startLocation = {
               type: 'Point',
-              coordinates: [-80.185942, 25.774772],
+              coordinates: [-10.185942, 95.774772],
               address: '47 Bowman Lane, Kings Park, NY 11754',
               description: 'New York'
             };
             _context.next = 4;
             return (0, _axios.default)({
               method: 'POST',
-
-              /* headers: {
-                'Content-Type': `multipart/form-data; boundary=${myForm._boundary}`
-              }, */
+              headers: {
+                'Content-Type': "multipart/form-data; boundary=".concat(myForm._boundary)
+              },
               url: 'http://127.0.0.1:8000/api/v1/tours',
               data: myForm
             });
@@ -9100,12 +9099,16 @@ if (mapBox) {
 }
 
 if (loginForm) {
+  console.log('this is working');
   loginForm.addEventListener('submit', function (e) {
     e.preventDefault();
+    console.log('but button was clicked!');
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
     (0, _login.login)(email, password);
   });
+} else {
+  console.log('the login form is missing');
 }
 
 if (createForm) {
@@ -9121,12 +9124,12 @@ if (createForm) {
     myForm.set('summary', document.getElementById('summary').value);
     myForm.set('description', document.getElementById('description').value);
     myForm.set('imageCover', document.getElementById('imageCover').files[0]);
-    console.log(myForm);
     (0, _createTour.createTour)(myForm);
   });
 }
 
 if (signupForm) {
+  console.log('The form is here!!!');
   signupForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var name = document.getElementById('name').value;
@@ -9135,6 +9138,8 @@ if (signupForm) {
     var passwordConfirm = document.getElementById('passwordConfirm').value;
     (0, _signup.signup)(name, email, password, passwordConfirm);
   });
+} else {
+  console.log('No form!');
 }
 
 if (logOutBtn) logOutBtn.addEventListener('click', _login.logout);
@@ -9217,7 +9222,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59906" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55219" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

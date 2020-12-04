@@ -51,6 +51,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   */
   );
   const url = `${req.protocol}://${req.get('host')}/me`;
+  console.log(req.body);
   console.log(url);
   await new Email(newUser, url).sendWelcome();
   createSendToken(newUser, 201, res);
@@ -97,6 +98,7 @@ exports.isLoggedIn = async (req, res, next) => {
 
       //THERE IS A LOGGED IN USER
       res.locals.user = currentUser;
+      console.log(`this is working!!!! here's the info: ${res.locals.user}`);
       return next();
     } catch (err) {
       return next();

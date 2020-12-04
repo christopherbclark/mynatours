@@ -28,7 +28,7 @@ mongoose
   // eslint-disable-next-line no-console
   .then(() => console.log('DB connection successful!'));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`App is running on port ${port}...`);
