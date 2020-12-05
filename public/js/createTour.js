@@ -16,7 +16,7 @@ export const createTour = async myForm => {
       headers: {
         'Content-Type': `multipart/form-data; boundary=${myForm._boundary}`
       },
-      url: 'http://127.0.0.1:8000/api/v1/tours',
+      url: '/api/v1/tours',
       data: myForm
     });
 
