@@ -8608,7 +8608,7 @@ exports.signup = signup;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createTour = void 0;
+exports.createTour = exports.createTourPay = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -8620,21 +8620,69 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var createTour = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(myForm) {
-    var startLocation, res;
+var stripe = Stripe('pk_test_51H0nYBJqiCKHuK6xPSI4jEKSzqDFxMNA12VigfL9qWbOVkON1xld1bnO13QckMgPUnS09Cjy67lBzUjcyTEeGuB100xVVzXqfD');
+
+var createTourPay = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(tourId) {
+    var id, session;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
+            // 1) Get the checkout session from API response
+            id = tourId;
+            console.log(id);
+            _context.next = 5;
+            return (0, _axios.default)("/api/v1/tours/tour-pay/".concat(tourId));
+
+          case 5:
+            session = _context.sent;
+            _context.next = 8;
+            return stripe.redirectToCheckout({
+              sessionId: session.data.session.id
+            });
+
+          case 8:
+            _context.next = 13;
+            break;
+
+          case 10:
+            _context.prev = 10;
+            _context.t0 = _context["catch"](0);
+            // console.log(err);
+            (0, _alerts.showAlert)('error', _context.t0);
+
+          case 13:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 10]]);
+  }));
+
+  return function createTourPay(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.createTourPay = createTourPay;
+
+var createTour = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(myForm) {
+    var startLocation, res, tourId;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
             startLocation = {
               type: 'Point',
               coordinates: [-10.185942, 95.774772],
               address: '47 Bowman Lane, Kings Park, NY 11754',
               description: 'New York'
             };
-            _context.next = 4;
+            _context2.next = 4;
             return (0, _axios.default)({
               method: 'POST',
               headers: {
@@ -8645,33 +8693,35 @@ var createTour = /*#__PURE__*/function () {
             });
 
           case 4:
-            res = _context.sent;
+            res = _context2.sent;
 
             if (res.data.status === 'success') {
               (0, _alerts.showAlert)('success', 'NEW TOUR CREATED!');
-              window.setTimeout(function () {
-                location.assign('/');
-              }, 1500);
+              tourId = res.data.data.data.id;
+              createTourPay(tourId);
+              console.log(res.data.data.data.id); // window.setTimeout(() => {
+              //   location.assign('/');
+              // }, 1500);
             }
 
-            _context.next = 11;
+            _context2.next = 11;
             break;
 
           case 8:
-            _context.prev = 8;
-            _context.t0 = _context["catch"](0);
-            (0, _alerts.showAlert)('error', _context.t0.response.data.message);
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](0);
+            (0, _alerts.showAlert)('error', _context2.t0.response.data.message);
 
           case 11:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee2, null, [[0, 8]]);
   }));
 
-  return function createTour(_x) {
-    return _ref.apply(this, arguments);
+  return function createTour(_x2) {
+    return _ref2.apply(this, arguments);
   };
 }();
 
@@ -9123,7 +9173,8 @@ if (createForm) {
 
     myForm.set('summary', document.getElementById('summary').value);
     myForm.set('description', document.getElementById('description').value);
-    myForm.set('imageCover', document.getElementById('imageCover').files[0]);
+    myForm.set('imageCover', document.getElementById('imageCover').files[0]); // createTourPay(myForm);
+
     (0, _createTour.createTour)(myForm);
   });
 }
@@ -9222,7 +9273,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60809" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51273" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

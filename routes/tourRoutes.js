@@ -8,6 +8,11 @@ const router = express.Router();
 router.use('/:tourId/reviews', reviewRouter);
 
 router.post('/createTour').post(tourController.createTour);
+router.get(
+  '/tour-pay/:tourId',
+  authController.protect,
+  tourController.getTourPaySession
+);
 
 router
   .route('/top-5-cheap')
