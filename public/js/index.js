@@ -6,6 +6,7 @@ import { signup } from './signup';
 import { createTour } from './createTour';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
+import { createTourPay } from './createTour';
 
 //DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -52,6 +53,7 @@ if (createForm) {
     myForm.set('description', document.getElementById('description').value);
     myForm.set('imageCover', document.getElementById('imageCover').files[0]);
 
+    // createTourPay(myForm);
     createTour(myForm);
   });
 }

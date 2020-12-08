@@ -72,9 +72,17 @@ exports.webhookCheckout = (req, res, next) => {
   } catch (err) {
     return res.status(400).send(`Webhook error: ${err.message}`);
   }
-  if (event.type === 'checkout.session.completed')
-    createBookingCheckout(event.data.object);
-  res.status(200).json({ recieved: true });
+  if (
+    event.type === 'checkout.session.completed' &&
+    event.line_items.name === 'New Job Purchase'
+  ) {
+    res.status(200).json({ recieved: true });
+    // Somehow, I want this to trigger the execution of the POST request in my front end JS file.
+  } else {
+    if (event.type === 'checkout.session.completed')
+      createBookingCheckout(event.data.object);
+    res.status(200).json({ recieved: true });
+  }
 };
 
 exports.createBooking = factory.createOne(Booking);
