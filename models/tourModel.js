@@ -87,6 +87,10 @@ const tourSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    paymentCurrent: {
+      type: Boolean,
+      default: false
+    },
     startLocation: {
       //GeoJSON Data
       type: {

@@ -90,8 +90,8 @@ exports.getTourPaySession = catchAsync(async (req, res, next) => {
 
     line_items: [
       {
-        name: `${tour.name} Listing`,
-        description: tour.summary,
+        name: `Purchase Listing`,
+        description: tour.name,
         images: [
           `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`
         ],

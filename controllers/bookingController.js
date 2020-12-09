@@ -60,6 +60,21 @@ const createBookingCheckout = async session => {
   await Booking.create({ tour, user, price });
 };
 
+// const markPaid = async session => {
+//   const tour = session.client_reference_id;
+//   const paymentCurrent = true;
+//   await Tour.findByIdAndUpdate(tour, paymentCurrent, {
+//     new: false,
+//     runValidators: false
+//   });
+// };
+
+const markPaid = async session => {
+  const tour = session.client_reference_id;
+  console.log(tour);
+  await Tour.findByIdAndUpdate(tour, { paymentCurrent: true });
+};
+
 exports.webhookCheckout = (req, res, next) => {
   const signature = req.headers['stripe-signature'];
   let event;
@@ -74,8 +89,9 @@ exports.webhookCheckout = (req, res, next) => {
   }
   if (
     event.type === 'checkout.session.completed' &&
-    event.line_items.name === 'New Job Purchase'
+    event.line_items.name === 'Purchase Listing'
   ) {
+    markPaid(event.data.object);
     res.status(200).json({ recieved: true });
     // Somehow, I want this to trigger the execution of the POST request in my front end JS file.
   } else {
