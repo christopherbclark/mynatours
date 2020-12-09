@@ -6,7 +6,7 @@ const AppError = require('../utils/appError');
 
 exports.getOverview = async (req, res, next) => {
   // 1) Get tour data from Collection
-  const tours = await Tour.find();
+  const tours = await Tour.find({ paymentCurrent: true });
   // 2) Build template
 
   // 3) Render the template from the tour data from step 1

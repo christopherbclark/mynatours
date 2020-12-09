@@ -8699,7 +8699,7 @@ var createTour = /*#__PURE__*/function () {
               (0, _alerts.showAlert)('success', 'NEW TOUR CREATED!');
               tourId = res.data.data.data.id;
               createTourPay(tourId);
-              console.log(res.data.data.data.id); // window.setTimeout(() => {
+              console.log(req.user); // window.setTimeout(() => {
               //   location.assign('/');
               // }, 1500);
             }
@@ -9273,7 +9273,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51273" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57865" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
