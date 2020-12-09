@@ -84,7 +84,7 @@ exports.getTourPaySession = catchAsync(async (req, res, next) => {
     // }&user=${req.user.id}&price=${tour.price}`,
     cancel_url: `${req.protocol}://${req.get('host')}/`,
     customer_email: req.user.email,
-    client_reference_id: tour,
+    client_reference_id: req.params.tourId,
     // client_reference_id: req.params.tourId,
     // Info about the product to be purchased
 
