@@ -89,7 +89,7 @@ exports.webhookCheckout = (req, res, next) => {
   }
   if (
     event.type === 'checkout.session.completed' &&
-    event.line_items.name === 'Purchase Listing'
+    event.display_items.name === 'Purchase Listing'
   ) {
     markPaid(event.data.object);
     res.status(200).json({ recieved: true });
