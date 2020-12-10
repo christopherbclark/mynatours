@@ -91,6 +91,9 @@ const tourSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    createdBy: {
+      type: String
+    },
     startLocation: {
       //GeoJSON Data
       type: {
