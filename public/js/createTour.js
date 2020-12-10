@@ -43,8 +43,9 @@ export const createTour = async myForm => {
     if (res.data.status === 'success') {
       showAlert('success', 'NEW TOUR CREATED!');
       const tourId = res.data.data.data.id;
+      console.log(res);
       createTourPay(tourId);
-      console.log(req.user);
+
       // window.setTimeout(() => {
       //   location.assign('/');
       // }, 1500);
