@@ -108,6 +108,31 @@ exports.getTourPaySession = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getAccountLink = catchAsync(async (req, res, next) => {
+  const accountNum = req.params.accountId;
+  const accountLinks = await stripe.accountLinks.create({
+    account: accountNum,
+    refresh_url: 'https://example.com/reauth',
+    return_url: 'https://example.com/return',
+    type: 'account_onboarding'
+  });
+  res.status(200).json({
+    status: 'success',
+    accountLinks
+  });
+});
+
+exports.createSellerAccount = catchAsync(async (req, res, next) => {
+  const account = await stripe.accounts.create({
+    type: 'express'
+  });
+
+  res.status(200).json({
+    status: 'success',
+    account
+  });
+});
+
 exports.createTourListing = factory.createOneListing(Tour);
 exports.getAllTours = factory.getAll(Tour);
 exports.getTour = factory.getOne(Tour, { path: 'reviews' });
