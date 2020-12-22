@@ -87,6 +87,15 @@ const tourSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    paymentCurrent: {
+      type: Boolean,
+      default: false
+    },
+    createdBy: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [true, 'Booking must belong to a User!']
+    },
     startLocation: {
       //GeoJSON Data
       type: {
@@ -136,6 +145,14 @@ tourSchema.index({ startLocation: '2dsphere' });
 
 tourSchema.virtual('duraitonWeeks').get(function() {
   return this.duration / 7;
+});
+
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: '_id'
+  });
+  next();
 });
 
 //Virtual populate

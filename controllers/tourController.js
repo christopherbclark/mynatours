@@ -1,3 +1,4 @@
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const multer = require('multer');
 const sharp = require('sharp');
 const Tour = require('../models/tourModel');
@@ -36,8 +37,7 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
   // if (!req.files.imageCover || !req.files.images) return next();
 
   //)1 Cover Image
-  req.body.imageCover = `tour-${req.body.name}-${Date.now()}-cover.jpeg`;
-  console.log(req.file);
+  req.body.imageCover = `tour-${req.body.id}-${Date.now()}-cover.jpeg`;
   await sharp(req.file.buffer)
     .resize(2000, 1333)
     .toFormat('jpeg')
@@ -71,6 +71,69 @@ exports.aliasTopTours = (req, res, next) => {
   next();
 };
 
+exports.getTourPaySession = catchAsync(async (req, res, next) => {
+  const tour = await Tour.findById(req.params.tourId);
+  // 2) Create the checkout session
+  // Info about the actual session
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    success_url: `${req.protocol}://${req.get('host')}/`,
+
+    // success_url: `${req.protocol}://${req.get('host')}/?tour=${
+    //   req.params.tourId
+    // }&user=${req.user.id}&price=${tour.price}`,
+    cancel_url: `${req.protocol}://${req.get('host')}/`,
+    customer_email: req.user.email,
+    client_reference_id: req.params.tourId,
+    // client_reference_id: req.params.tourId,
+    // Info about the product to be purchased
+
+    line_items: [
+      {
+        name: `Purchase Listing`,
+        description: tour.name,
+        images: [
+          `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`
+        ],
+        amount: 2500,
+        currency: `usd`,
+        quantity: 1
+      }
+    ]
+  });
+
+  res.status(200).json({
+    status: 'success',
+    session
+  });
+});
+
+exports.getAccountLink = catchAsync(async (req, res, next) => {
+  const accountNum = req.params.accountId;
+  const accountLinks = await stripe.accountLinks.create({
+    account: accountNum,
+    refresh_url: 'https://example.com/reauth',
+    return_url: 'https://example.com/return',
+    type: 'account_onboarding'
+  });
+  res.status(200).json({
+    status: 'success',
+    accountLinks
+  });
+});
+
+exports.createSellerAccount = catchAsync(async (req, res, next) => {
+  const account = await stripe.accounts.create({
+    type: 'express'
+  });
+
+  res.status(200).json({
+    status: 'success',
+    account
+  });
+});
+
+exports.createTourListing = factory.createOneListing(Tour);
 exports.getAllTours = factory.getAll(Tour);
 exports.getTour = factory.getOne(Tour, { path: 'reviews' });
 exports.createTour = factory.createOne(Tour);

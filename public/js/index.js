@@ -6,6 +6,7 @@ import { signup } from './signup';
 import { createTour } from './createTour';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
+import { sellerOnboard } from './stripe';
 
 //DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -13,6 +14,7 @@ const loginForm = document.querySelector('.form--login');
 const createForm = document.querySelector('.form--create');
 const signupForm = document.querySelector('.form--signup');
 const logOutBtn = document.querySelector('.nav__el--logout');
+const becomeSeller = document.querySelector('.nav__el--seller');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
@@ -25,6 +27,12 @@ if (mapBox) {
   displayMap(locations);
 }
 
+if (becomeSeller)
+  becomeSeller.addEventListener('click', e => {
+    e.preventDefault();
+    sellerOnboard();
+  });
+
 if (loginForm) {
   console.log('this is working');
   loginForm.addEventListener('submit', e => {
@@ -34,8 +42,6 @@ if (loginForm) {
     const password = document.getElementById('password').value;
     login(email, password);
   });
-} else {
-  console.log('the login form is missing');
 }
 
 if (createForm) {
@@ -52,6 +58,7 @@ if (createForm) {
     myForm.set('description', document.getElementById('description').value);
     myForm.set('imageCover', document.getElementById('imageCover').files[0]);
 
+    // createTourPay(myForm);
     createTour(myForm);
   });
 }
@@ -66,8 +73,6 @@ if (signupForm) {
     const passwordConfirm = document.getElementById('passwordConfirm').value;
     signup(name, email, password, passwordConfirm);
   });
-} else {
-  console.log('No form!');
 }
 
 if (logOutBtn) logOutBtn.addEventListener('click', logout);

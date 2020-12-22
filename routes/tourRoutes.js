@@ -8,6 +8,23 @@ const router = express.Router();
 router.use('/:tourId/reviews', reviewRouter);
 
 router.post('/createTour').post(tourController.createTour);
+router.get(
+  '/tour-pay/:tourId',
+  authController.protect,
+  tourController.getTourPaySession
+);
+
+router.get(
+  '/seller-signup',
+  authController.protect,
+  tourController.createSellerAccount
+);
+
+router.get(
+  '/seller-signup/:accountId',
+  authController.protect,
+  tourController.getAccountLink
+);
 
 router
   .route('/top-5-cheap')
@@ -36,7 +53,7 @@ router
     authController.restrictTo('user', 'admin', 'lead-guide'),
     tourController.uploadTourImages,
     tourController.resizeTourImages,
-    tourController.createTour
+    tourController.createTourListing
   );
 
 router

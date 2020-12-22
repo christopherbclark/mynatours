@@ -6630,7 +6630,6 @@ var displayMap = function displayMap(locations) {
 };
 
 exports.displayMap = displayMap;
-console.log('Hello!');
 },{}],"../../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
@@ -8448,7 +8447,7 @@ var login = /*#__PURE__*/function () {
             _context.next = 3;
             return (0, _axios.default)({
               method: 'POST',
-              url: 'http://127.0.0.1:8000/api/v1/users/login',
+              url: '/api/v1/users/login',
               data: {
                 email: email,
                 password: password
@@ -8499,7 +8498,7 @@ var logout = /*#__PURE__*/function () {
             _context2.next = 3;
             return (0, _axios.default)({
               method: 'GET',
-              url: 'http://127.0.0.1:8000/api/v1/users/logout'
+              url: '/api/v1/users/logout'
             });
 
           case 3:
@@ -8561,7 +8560,7 @@ var signup = /*#__PURE__*/function () {
             _context.next = 3;
             return (0, _axios.default)({
               method: 'POST',
-              url: 'http://127.0.0.1:8000/api/v1/users/signup',
+              url: '/api/v1/users/signup',
               data: {
                 name: name,
                 email: email,
@@ -8608,7 +8607,7 @@ exports.signup = signup;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createTour = void 0;
+exports.createTour = exports.createTourPay = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -8620,58 +8619,108 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var createTour = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(myForm) {
-    var startLocation, res;
+var stripe = Stripe('pk_test_51H0nYBJqiCKHuK6xPSI4jEKSzqDFxMNA12VigfL9qWbOVkON1xld1bnO13QckMgPUnS09Cjy67lBzUjcyTEeGuB100xVVzXqfD');
+
+var createTourPay = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(tourId) {
+    var id, session;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
+            // 1) Get the checkout session from API response
+            id = tourId;
+            console.log(id);
+            _context.next = 5;
+            return (0, _axios.default)("/api/v1/tours/tour-pay/".concat(tourId));
+
+          case 5:
+            session = _context.sent;
+            _context.next = 8;
+            return stripe.redirectToCheckout({
+              sessionId: session.data.session.id
+            });
+
+          case 8:
+            _context.next = 13;
+            break;
+
+          case 10:
+            _context.prev = 10;
+            _context.t0 = _context["catch"](0);
+            // console.log(err);
+            (0, _alerts.showAlert)('error', _context.t0);
+
+          case 13:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 10]]);
+  }));
+
+  return function createTourPay(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.createTourPay = createTourPay;
+
+var createTour = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(myForm) {
+    var startLocation, res, tourId;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
             startLocation = {
               type: 'Point',
               coordinates: [-10.185942, 95.774772],
               address: '47 Bowman Lane, Kings Park, NY 11754',
               description: 'New York'
             };
-            _context.next = 4;
+            _context2.next = 4;
             return (0, _axios.default)({
               method: 'POST',
               headers: {
                 'Content-Type': "multipart/form-data; boundary=".concat(myForm._boundary)
               },
-              url: 'http://127.0.0.1:8000/api/v1/tours',
+              url: '/api/v1/tours',
               data: myForm
             });
 
           case 4:
-            res = _context.sent;
+            res = _context2.sent;
 
             if (res.data.status === 'success') {
               (0, _alerts.showAlert)('success', 'NEW TOUR CREATED!');
-              window.setTimeout(function () {
-                location.assign('/');
-              }, 1500);
+              tourId = res.data.data.data.id;
+              console.log(res);
+              createTourPay(tourId); // window.setTimeout(() => {
+              //   location.assign('/');
+              // }, 1500);
             }
 
-            _context.next = 11;
+            _context2.next = 11;
             break;
 
           case 8:
-            _context.prev = 8;
-            _context.t0 = _context["catch"](0);
-            (0, _alerts.showAlert)('error', _context.t0.response.data.message);
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](0);
+            (0, _alerts.showAlert)('error', _context2.t0.response.data.message);
 
           case 11:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee2, null, [[0, 8]]);
   }));
 
-  return function createTour(_x) {
-    return _ref.apply(this, arguments);
+  return function createTour(_x2) {
+    return _ref2.apply(this, arguments);
   };
 }();
 
@@ -8703,7 +8752,7 @@ var updateSettings = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            url = type === 'password' ? 'http://127.0.0.1:8000/api/v1/users/updateMyPassword/' : 'http://127.0.0.1:8000/api/v1/users/updateMe';
+            url = type === 'password' ? '/api/v1/users/updateMyPassword/' : '/api/v1/users/updateMe';
             _context.next = 4;
             return (0, _axios.default)({
               method: 'PATCH',
@@ -8750,7 +8799,7 @@ exports.updateSettings = updateSettings;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.bookTour = void 0;
+exports.bookTour = exports.sellerOnboard = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -8764,46 +8813,159 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var stripe = Stripe('pk_test_51H0nYBJqiCKHuK6xPSI4jEKSzqDFxMNA12VigfL9qWbOVkON1xld1bnO13QckMgPUnS09Cjy67lBzUjcyTEeGuB100xVVzXqfD');
 
-var bookTour = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(tourId) {
-    var session;
+var getLink = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(accountId) {
+    var accountLink, URL;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return (0, _axios.default)("http://127.0.0.1:8000/api/v1/bookings/checkout-session/".concat(tourId));
+            return (0, _axios.default)("/api/v1/tours/seller-signup/".concat(accountId));
 
           case 3:
-            session = _context.sent;
+            accountLink = _context.sent;
+            URL = accountLink.data.accountLinks.url;
+            location.replace(URL); // 1) Get the checkout session from API response
+
+            _context.next = 12;
+            break;
+
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            console.log(_context.t0);
+            (0, _alerts.showAlert)('error', _context.t0);
+
+          case 12:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 8]]);
+  }));
+
+  return function getLink(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var updateUserAccount = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(accountId) {
+    var updateUserAccountId;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return (0, _axios.default)("/api/v1/users/seller-signup/".concat(accountId));
+
+          case 3:
+            updateUserAccountId = _context2.sent;
+            _context2.next = 10;
+            break;
+
+          case 6:
+            _context2.prev = 6;
+            _context2.t0 = _context2["catch"](0);
+            console.log(_context2.t0);
+            (0, _alerts.showAlert)('error', _context2.t0);
+
+          case 10:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 6]]);
+  }));
+
+  return function updateUserAccount(_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+var sellerOnboard = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var signUp, accountId;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
+            return (0, _axios.default)("/api/v1/tours/seller-signup");
+
+          case 3:
+            signUp = _context3.sent;
+            accountId = signUp.data.account.id;
+            console.log(accountId);
+            getLink(accountId);
+            updateUserAccount(accountId);
+            _context3.next = 13;
+            break;
+
+          case 10:
+            _context3.prev = 10;
+            _context3.t0 = _context3["catch"](0);
+            console.log(_context3.t0);
+
+          case 13:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[0, 10]]);
+  }));
+
+  return function sellerOnboard() {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+exports.sellerOnboard = sellerOnboard;
+
+var bookTour = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(tourId) {
+    var session;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return (0, _axios.default)("/api/v1/bookings/checkout-session/".concat(tourId));
+
+          case 3:
+            session = _context4.sent;
             console.log(session); // 2) Create checkout form + charge the credit card
 
-            _context.next = 7;
+            _context4.next = 7;
             return stripe.redirectToCheckout({
               sessionId: session.data.session.id
             });
 
           case 7:
-            _context.next = 13;
+            _context4.next = 13;
             break;
 
           case 9:
-            _context.prev = 9;
-            _context.t0 = _context["catch"](0);
-            console.log(_context.t0);
-            (0, _alerts.showAlert)('error', _context.t0);
+            _context4.prev = 9;
+            _context4.t0 = _context4["catch"](0);
+            console.log(_context4.t0);
+            (0, _alerts.showAlert)('error', _context4.t0);
 
           case 13:
           case "end":
-            return _context.stop();
+            return _context4.stop();
         }
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee4, null, [[0, 9]]);
   }));
 
-  return function bookTour(_x) {
-    return _ref.apply(this, arguments);
+  return function bookTour(_x3) {
+    return _ref4.apply(this, arguments);
   };
 }();
 
@@ -9089,6 +9251,7 @@ var loginForm = document.querySelector('.form--login');
 var createForm = document.querySelector('.form--create');
 var signupForm = document.querySelector('.form--signup');
 var logOutBtn = document.querySelector('.nav__el--logout');
+var becomeSeller = document.querySelector('.nav__el--seller');
 var userDataForm = document.querySelector('.form-user-data');
 var userPasswordForm = document.querySelector('.form-user-password');
 var bookBtn = document.getElementById('book-tour'); //DELEGATIONS
@@ -9097,6 +9260,11 @@ if (mapBox) {
   var locations = JSON.parse(document.getElementById('map').dataset.locations);
   (0, _mapbox.displayMap)(locations);
 }
+
+if (becomeSeller) becomeSeller.addEventListener('click', function (e) {
+  e.preventDefault();
+  (0, _stripe.sellerOnboard)();
+});
 
 if (loginForm) {
   console.log('this is working');
@@ -9107,8 +9275,6 @@ if (loginForm) {
     var password = document.getElementById('password').value;
     (0, _login.login)(email, password);
   });
-} else {
-  console.log('the login form is missing');
 }
 
 if (createForm) {
@@ -9123,7 +9289,8 @@ if (createForm) {
 
     myForm.set('summary', document.getElementById('summary').value);
     myForm.set('description', document.getElementById('description').value);
-    myForm.set('imageCover', document.getElementById('imageCover').files[0]);
+    myForm.set('imageCover', document.getElementById('imageCover').files[0]); // createTourPay(myForm);
+
     (0, _createTour.createTour)(myForm);
   });
 }
@@ -9138,8 +9305,6 @@ if (signupForm) {
     var passwordConfirm = document.getElementById('passwordConfirm').value;
     (0, _signup.signup)(name, email, password, passwordConfirm);
   });
-} else {
-  console.log('No form!');
 }
 
 if (logOutBtn) logOutBtn.addEventListener('click', _login.logout);
@@ -9222,7 +9387,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55219" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64152" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -23,6 +23,8 @@ router.patch(
 );
 router.delete('/deleteMe', userController.deleteMe);
 
+router.get('/seller-signup/:accountId', userController.assignAccountId);
+
 router.use(authController.restrictTo('admin'));
 
 router
