@@ -92,7 +92,9 @@ const tourSchema = new mongoose.Schema(
       default: false
     },
     createdBy: {
-      type: String
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [true, 'Booking must belong to a User!']
     },
     startLocation: {
       //GeoJSON Data
@@ -143,6 +145,14 @@ tourSchema.index({ startLocation: '2dsphere' });
 
 tourSchema.virtual('duraitonWeeks').get(function() {
   return this.duration / 7;
+});
+
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: '_id'
+  });
+  next();
 });
 
 //Virtual populate

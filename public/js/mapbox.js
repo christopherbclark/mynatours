@@ -57,4 +57,3 @@ export const displayMap = locations => {
     });
   });
 };
-console.log('Hello!');

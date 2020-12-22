@@ -71,7 +71,6 @@ const createBookingCheckout = async session => {
 
 const markPaid = async session => {
   const tour = session.client_reference_id;
-  console.log(tour);
   await Tour.findByIdAndUpdate(tour, { paymentCurrent: true });
 };
 
@@ -92,8 +91,7 @@ exports.webhookCheckout = (req, res, next) => {
     res.status(200).json({ recieved: true });
     // Somehow, I want this to trigger the execution of the POST request in my front end JS file.
   } else {
-    if (event.type === 'checkout.session.completedddddd')
-      createBookingCheckout(event.data.object);
+    if (event.type === 'account.updated') console.log(event.data.object);
     res.status(200).json({ recieved: true });
   }
 };

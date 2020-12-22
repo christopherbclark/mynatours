@@ -14,6 +14,18 @@ router.get(
   tourController.getTourPaySession
 );
 
+router.get(
+  '/seller-signup',
+  authController.protect,
+  tourController.createSellerAccount
+);
+
+router.get(
+  '/seller-signup/:accountId',
+  authController.protect,
+  tourController.getAccountLink
+);
+
 router
   .route('/top-5-cheap')
   .get(tourController.aliasTopTours, tourController.getAllTours);

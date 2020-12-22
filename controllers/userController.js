@@ -97,6 +97,19 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.assignAccountId = catchAsync(async (req, res, next) => {
+  if (!req.user.accountIdNum) {
+    const newId = await User.findByIdAndUpdate(req.user.id, {
+      accountIdNum: req.params.accountId
+    });
+
+    res.status(204).json({
+      status: 'success',
+      data: newId
+    });
+  }
+});
+
 exports.createUser = (req, res) => {
   res.status(500).json({
     status: 'error',
