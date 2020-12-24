@@ -90,9 +90,6 @@ exports.webhookCheckout = (req, res, next) => {
     markPaid(event.data.object);
     res.status(200).json({ recieved: true });
     // Somehow, I want this to trigger the execution of the POST request in my front end JS file.
-  } else {
-    if (event.type === 'account.updated') console.log(event.data.object);
-    res.status(200).json({ recievedConnect: true });
   }
 };
 
