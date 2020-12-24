@@ -8799,7 +8799,7 @@ exports.updateSettings = updateSettings;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.bookTour = exports.sellerOnboard = void 0;
+exports.bookTour = exports.getDashboardLink = exports.sellerOnboard = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -8926,46 +8926,83 @@ var sellerOnboard = /*#__PURE__*/function () {
 
 exports.sellerOnboard = sellerOnboard;
 
-var bookTour = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(tourId) {
-    var session;
+var getDashboardLink = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+    var linkInfo;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
+            return (0, _axios.default)("/api/v1/tours/get-dashboard");
+
+          case 3:
+            linkInfo = _context4.sent;
+            location.replace(linkInfo.data.link.url);
+            _context4.next = 10;
+            break;
+
+          case 7:
+            _context4.prev = 7;
+            _context4.t0 = _context4["catch"](0);
+            console.log(_context4.t0);
+
+          case 10:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[0, 7]]);
+  }));
+
+  return function getDashboardLink() {
+    return _ref4.apply(this, arguments);
+  };
+}();
+
+exports.getDashboardLink = getDashboardLink;
+
+var bookTour = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(tourId) {
+    var session;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            _context5.next = 3;
             return (0, _axios.default)("/api/v1/bookings/checkout-session/".concat(tourId));
 
           case 3:
-            session = _context4.sent;
+            session = _context5.sent;
             console.log(session); // 2) Create checkout form + charge the credit card
 
-            _context4.next = 7;
+            _context5.next = 7;
             return stripe.redirectToCheckout({
               sessionId: session.data.session.id
             });
 
           case 7:
-            _context4.next = 13;
+            _context5.next = 13;
             break;
 
           case 9:
-            _context4.prev = 9;
-            _context4.t0 = _context4["catch"](0);
-            console.log(_context4.t0);
-            (0, _alerts.showAlert)('error', _context4.t0);
+            _context5.prev = 9;
+            _context5.t0 = _context5["catch"](0);
+            console.log(_context5.t0);
+            (0, _alerts.showAlert)('error', _context5.t0);
 
           case 13:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4, null, [[0, 9]]);
+    }, _callee5, null, [[0, 9]]);
   }));
 
   return function bookTour(_x3) {
-    return _ref4.apply(this, arguments);
+    return _ref5.apply(this, arguments);
   };
 }();
 
@@ -9252,6 +9289,7 @@ var createForm = document.querySelector('.form--create');
 var signupForm = document.querySelector('.form--signup');
 var logOutBtn = document.querySelector('.nav__el--logout');
 var becomeSeller = document.querySelector('.nav__el--seller');
+var getDashboard = document.querySelector('.nav__el--dashboard');
 var userDataForm = document.querySelector('.form-user-data');
 var userPasswordForm = document.querySelector('.form-user-password');
 var bookBtn = document.getElementById('book-tour'); //DELEGATIONS
@@ -9265,6 +9303,15 @@ if (becomeSeller) becomeSeller.addEventListener('click', function (e) {
   e.preventDefault();
   (0, _stripe.sellerOnboard)();
 });
+
+if (getDashboard) {
+  console.log('its here!');
+  getDashboard.addEventListener('click', function (e) {
+    e.preventDefault();
+    (0, _stripe.getDashboardLink)();
+    console.log('it was clicked!');
+  });
+}
 
 if (loginForm) {
   console.log('this is working');
@@ -9387,7 +9434,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64152" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64537" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

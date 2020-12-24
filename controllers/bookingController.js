@@ -96,6 +96,28 @@ exports.webhookCheckout = (req, res, next) => {
   }
 };
 
+exports.webhookConnect = (req, res, next) => {
+  const signature = req.headers['stripe-signature'];
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET_CONNECT
+    );
+  } catch (err) {
+    return res.status(400).send(`Webhook error: ${err.message}`);
+  }
+  if (event.type === 'checkout.session.completed') {
+    markPaid(event.data.object);
+    res.status(200).json({ recieved: true });
+    // Somehow, I want this to trigger the execution of the POST request in my front end JS file.
+  } else {
+    if (event.type === 'account.updated') console.log(event.data.object);
+    res.status(200).json({ recievedConnect: true });
+  }
+};
+
 exports.createBooking = factory.createOne(Booking);
 exports.getBooking = factory.getOne(Booking);
 exports.getAllBookings = factory.getAll(Booking);

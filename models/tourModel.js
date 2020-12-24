@@ -92,8 +92,7 @@ const tourSchema = new mongoose.Schema(
       default: false
     },
     createdBy: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
+      type: String,
       required: [true, 'Booking must belong to a User!']
     },
     startLocation: {

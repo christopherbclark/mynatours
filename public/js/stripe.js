@@ -41,6 +41,15 @@ export const sellerOnboard = async () => {
   }
 };
 
+export const getDashboardLink = async () => {
+  try {
+    const linkInfo = await axios(`/api/v1/tours/get-dashboard`);
+    location.replace(linkInfo.data.link.url);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const bookTour = async tourId => {
   try {
     // 1) Get the checkout session from API response

@@ -122,6 +122,15 @@ exports.getAccountLink = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getUserDashboard = catchAsync(async (req, res, next) => {
+  const link = await stripe.accounts.createLoginLink(req.user.accountIdNum);
+
+  res.status(200).json({
+    status: 'success',
+    link
+  });
+});
+
 exports.createSellerAccount = catchAsync(async (req, res, next) => {
   const account = await stripe.accounts.create({
     type: 'express'

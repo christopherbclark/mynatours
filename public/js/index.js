@@ -5,8 +5,7 @@ import { login, logout } from './login';
 import { signup } from './signup';
 import { createTour } from './createTour';
 import { updateSettings } from './updateSettings';
-import { bookTour } from './stripe';
-import { sellerOnboard } from './stripe';
+import { sellerOnboard, getDashboardLink, bookTour } from './stripe';
 
 //DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -15,6 +14,7 @@ const createForm = document.querySelector('.form--create');
 const signupForm = document.querySelector('.form--signup');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const becomeSeller = document.querySelector('.nav__el--seller');
+const getDashboard = document.querySelector('.nav__el--dashboard');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
@@ -32,6 +32,15 @@ if (becomeSeller)
     e.preventDefault();
     sellerOnboard();
   });
+
+if (getDashboard) {
+  console.log('its here!');
+  getDashboard.addEventListener('click', e => {
+    e.preventDefault();
+    getDashboardLink();
+    console.log('it was clicked!');
+  });
+}
 
 if (loginForm) {
   console.log('this is working');

@@ -51,6 +51,12 @@ app.post(
   bookingController.webhookCheckout
 );
 
+app.post(
+  '/webhook-connect',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookConnect
+);
+
 //Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 

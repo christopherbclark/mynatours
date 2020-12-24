@@ -21,6 +21,12 @@ router.get(
 );
 
 router.get(
+  '/get-dashboard',
+  authController.protect,
+  tourController.getUserDashboard
+);
+
+router.get(
   '/seller-signup/:accountId',
   authController.protect,
   tourController.getAccountLink

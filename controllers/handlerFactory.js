@@ -48,7 +48,7 @@ exports.createOne = Model =>
 
 exports.createOneListing = Model =>
   catchAsync(async (req, res, next) => {
-    req.body.createdBy = req.user.id;
+    req.body.createdBy = req.user.accountIdNum;
     const doc = await Model.create(req.body);
     res.status(201).json({
       status: 'success',
