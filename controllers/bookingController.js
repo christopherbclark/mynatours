@@ -34,7 +34,12 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         currency: `usd`,
         quantity: 1
       }
-    ]
+    ],
+    payment_intent_data: {
+      application_fee_amount: 500,
+      transfer_data: {
+        destination: tour.createdBy,
+      }
   });
 
   res.status(200).json({
