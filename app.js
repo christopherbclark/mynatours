@@ -52,6 +52,12 @@ app.post(
 );
 
 app.post(
+  '/listing-purchase',
+  express.raw({ type: 'application/json' }),
+  bookingController.listingPurchase
+);
+
+app.post(
   '/webhook-connect',
   express.raw({ type: 'application/json' }),
   bookingController.webhookConnect
