@@ -36,7 +36,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       }
     ],
     payment_intent_data: {
-      application_fee_amount: 500,
+      application_fee_amount: tour.price * 0.01 * 100,
       transfer_data: {
         destination: tour.createdBy
       }
