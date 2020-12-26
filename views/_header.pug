@@ -2,8 +2,8 @@ header.header
     nav.nav.nav--tours
         a.nav__el(href='/') All tours
         if user
-            a.nav__el(href='/create') Create Tour
             if user.accountIdNum
+                a.nav__el(href='/create') Create Tour
                 a.nav__el.nav__el--dashboard(href='#') Seller Dashboard
             else
                 a.nav__el.nav__el--seller(href='/create') Sell With Us
